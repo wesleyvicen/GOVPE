@@ -1,0 +1,2 @@
+ErrorDocument 404 /erro_personalizado.html
+ErrorDocument 403 /proibido_personalizado.html
