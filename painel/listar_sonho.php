@@ -65,6 +65,7 @@ $f = mysqli_fetch_array($res);
 <table class="table">
     <thead class="thead-dark">
     <tr>
+        <th scope="col">ID</th>
         <th scope="col">Titulo</th>
         <th scope="col">Fullsize</th>
         <th scope="col">Thumbnails</th>
@@ -74,10 +75,14 @@ $f = mysqli_fetch_array($res);
     <tbody>
     <?php
 do {
-
-
-    echo " <tr><th>".utf8_encode($f['titulo'])."</th><th>".utf8_encode($f['fullsize'])."</th><th>".utf8_encode($f['thumbnails'])."</th><th>".utf8_encode($f['endereco'])."</th>";
+    echo " <tr>
+                <th>".utf8_encode($f['id'])."</th>
+                <th>".utf8_encode($f['titulo'])."</th>
+                <th>".utf8_encode($f['fullsize'])."</th>
+                <th>".utf8_encode($f['thumbnails'])."</th>
+                <th>".utf8_encode($f['endereco'])."</th>";
 }while (($f = mysqli_fetch_array($res)));
+echo("</tr>")
 
 ?>
     </tbody>
