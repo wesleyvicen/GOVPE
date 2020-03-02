@@ -3,5 +3,18 @@ if (!isset($_SESSION)) {
     session_start();
 }
 include('conexao.php');
+
+$id = mysqli_real_escape_string($conexao, trim($_POST['id']));
+
+
 $sql = "DELETE FROM sonhos WHERE id='$id'";
-$res = mysqli_query($conexao, $sql) or die(“Erro ao tentar excluir registro”);
+
+if($conexao->query($sql) === TRUE) {
+	$_SESSION['status_removido'] = true;
+}
+
+$conexao->close();
+
+header('Location: excluir.php');
+exit;
+?>

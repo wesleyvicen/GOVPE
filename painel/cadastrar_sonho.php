@@ -44,7 +44,7 @@ include('verifica_login.php');
         <div class="dropdown-menu">
             <a class="dropdown-item" href="./cadastrar_sonho.php">Cadastrar</a>
             <a class="dropdown-item" href="#">Alterar</a>
-            <a class="dropdown-item" href="#">Excluir</a>
+            <a class="dropdown-item" href="./excluir.php">Excluir</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="./listar_sonho.php">Listar</a>
         </div>
