@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="creditos"><a href="https://wesleyvicen.github.io/Curriculo/" class="byWesley" target="_blank" title="Site desenvolvido por WesleyV"></a>
+    <div class="creditos"><a href="https://github.com/wesleyvicen" class="byWesley" target="_blank" title="Site desenvolvido por WesleyV"></a>
     </div>
 </footer>
 
