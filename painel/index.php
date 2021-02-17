@@ -16,7 +16,7 @@ if(!isset($_SESSION))
 
         <!-- Icon -->
         <div class="fadeIn first">
-            <img src="http://govpe.com.br/img/favicon.png" id="icon" alt="User Icon" />
+            <img src="https://govpe.com.br/img/favicon.png" id="icon" alt="User Icon" />
         </div>
 
         <!-- Login Form -->

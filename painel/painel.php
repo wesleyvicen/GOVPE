@@ -78,7 +78,7 @@ Modelos > Listar (Lista todos os arquivos em um formato de texto)
 
 <h2><a href="logout.php">Sair</a></h2>
 </html>
-<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
+<script src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
 <script>
     $(function () {
