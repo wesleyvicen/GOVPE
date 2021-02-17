@@ -44,7 +44,7 @@
 
                     echo '<div class="col-lg-4 col-sm-6">
                                 <a class="gov-box" href="'.utf8_encode($f['fullsize']).'">
-                                <img class="img-fluid" src="'.utf8_encode($f['thumbnails']).'" alt="Entrega da Casa para '.utf8_encode($f['titulo']).'">
+                                <img class="img-fluid thumb" src="'.utf8_encode($f['thumbnails']).'" alt="Entrega da Casa para '.utf8_encode($f['titulo']).'">
                                     <div class="gov-box-caption">
                                         <div class="gov-box-caption-content">
                                             <div class="project-category text-faded">
