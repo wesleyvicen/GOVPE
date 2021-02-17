@@ -652,6 +652,12 @@ footer a.byWesley:hover {
     font-size: 0;
 }
 
+.thumb{
+    width:584px;
+    height:325px;
+    object-fit: cover;
+}
+
 .btn-primary {
     background-color: #0a1a3b;
     border-color: #0e182d
