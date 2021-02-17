@@ -71,8 +71,9 @@ include('verifica_login.php');
         <div class="form-group col-md-6">
             <label for="inputEndereco">endereco</label>
             <select class="form-control" id="inputEndereco" name="inputEndereco">
-                <option>Vicência, Pernambuco, Brazil</option>
                 <option>Aliança, Pernambuco, Brazil</option>
+                <option>Timbaúba, Pernambuco, Brazil</option>
+                <option>Vicência, Pernambuco, Brazil</option>
             </select>
         </div>
     </div>
