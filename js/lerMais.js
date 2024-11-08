@@ -1,29 +1,17 @@
-jQuery.fn.toggleText = function(a,b) {
+$(document).ready(function() {
+    $('.tgl').before('<span style="cursor: pointer; color: white;">Veja Mais »</span>');
 
-    return   this.html(this.html().replace(new RegExp("("+a+"|"+b+")"),function(x){return(x==a)?b:a;}));
+    $('.tgl').css('display', 'none');
 
-}
+    // Use $(document) para garantir que o evento funcione mesmo em elementos dinâmicos
+    $(document).on('click', 'span', function() {
+        var parent = $(this).parent('#box-toggle'); // Garante que está no contêiner correto
 
-$(document).ready(function(){
+        if (parent.length > 0) {
+            $(this).next('.tgl').slideToggle('slow')
+                .siblings('.tgl:visible').slideToggle('fast');
 
-    $('.tgl').before('<span style = "cursor: pointer"><font color=white>Veja Mais »</font></span>');
-
-    $('.tgl').css('display', 'none')
-
-    $('span', '#box-toggle').click(function() {
-
-        $(this).next().slideToggle('slow')
-
-            .siblings('.tgl:visible').slideToggle('fast');
-
-// aqui começa o funcionamento do plugin
-
-        $(this).toggleText('Veja Mais','Veja Menos')
-
-            .siblings('span').next('.tgl:visible').prev()
-
-            .toggleText('more »','« less')
-
+            $(this).toggleText('Veja Mais »', 'Veja Menos «');
+        }
     });
-
-})
+});
