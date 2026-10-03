@@ -324,7 +324,7 @@ section h2 {
         width: 200px;
         height: 50px;
         float: left;
-        background: url(../img/logo.gif) center center/150px no-repeat;
+        background: url(../img/logo.gif?v=6e747516a49a) center center/150px no-repeat;
         font-size: 0;
     }
 }
@@ -410,7 +410,7 @@ header.masthead h2 {
         width: 250px;
         height: 80px;
         float: left;
-        background: url(../img/logo.gif) center center/220px no-repeat;
+        background: url(../img/logo.gif?v=6e747516a49a) center center/220px no-repeat;
         font-size: 0em;
     }
 
@@ -637,7 +637,7 @@ footer a.byWesley {
     height: 37px;
     text-indent: -9999px;
     text-decoration: none;
-    background: url(../img/wesleyV.png) left top no-repeat;
+    background: url(../img/wesleyV.png?v=c3d09c331960) left top no-repeat;
     background-size: auto 100%
 }
 
@@ -649,7 +649,7 @@ footer a.byWesley:hover {
     width: 200px;
     height: 60px;
     float: left;
-    background: url(../img/logo.gif) center center/176px no-repeat;
+    background: url(../img/logo.gif?v=6e747516a49a) center center/176px no-repeat;
     font-size: 0;
 }
 

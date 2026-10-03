@@ -38,3 +38,7 @@ Foi mantida a estrutura visual, com jQuery 3.7.1 e Bootstrap 4.6.2 (linha compat
 O painel agora exige sessão nas ações de escrita, valida formulários, usa tokens CSRF e consultas preparadas. O cadastro de usuários exige login. Os hashes MD5 existentes foram preservados para evitar invalidar contas ou mudar o esquema do banco remoto. Uma migração para `password_hash()` exige ampliar a coluna de senha e planejar a transição; não foi executada. Funções de edição/modelos que já eram placeholders não foram implementadas.
 
 O painel também foi validado com login, cadastro, exclusão, acentos, usuário duplicado e CSRF em um MySQL temporário, sem escrita no banco publicado. `tests/panel_integration.py` é exclusivo da instância descartável na porta 8001 e requer um schema vazio `govpe_test` com as tabelas `usuario` e `sonhos`, e o usuário fictício `teste`/`teste-local`. Não o execute contra produção.
+
+## Cache das imagens e arquivos estáticos
+
+Logo e WhatsApp retornaram 404 em cache na Cloudflare (`cf-cache-status: HIT`), enquanto as URLs com uma versão retornaram 200. A home agora versiona CSS, JavaScript, favicon, imagem de fundo e WhatsApp pelo hash do arquivo. As imagens de fundo no CSS também possuem versão. Publique `app/bootstrap.php`, `index.php`, `css/style.css` e `sobre.html` juntos. Se a página continuar antiga, limpe o cache da Cloudflare e da hospedagem. Versões em `sobre.html` e nos `url()` do CSS devem ser atualizadas quando seus respectivos arquivos de origem mudarem.

@@ -42,10 +42,10 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Lato:400,700,400italic,700italic" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="<?= h(asset_url('/css/style.css')) ?>">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= h(asset_url('/img/favicon.png')) ?>">
 </head>
 
 <body id="page-top">
@@ -55,7 +55,7 @@ try {
 
 <main>
     <!-- Cabeçalho central com Parallax -->
-    <section class="call-to-action" style="background-image: url('/img/bg1.jpeg');">
+    <section class="call-to-action" style="background-image: url('<?= h(asset_url('/img/bg1.jpeg')) ?>');">
         <div class="container wow fadeIn">
             <div class="row">
                 <div class="col-md-10 mx-auto text-center">
@@ -101,7 +101,7 @@ try {
        title="Entre em contato pelo WhatsApp" 
        href="https://api.whatsapp.com/send?phone=5581995431081&text=Eu%20preciso%20de%20ajuda" 
        target="_blank">
-        <img src="/img/whatsapp.png" alt="Ícone do WhatsApp - Atendimento personalizado">
+        <img src="<?= h(asset_url('/img/whatsapp.png')) ?>" alt="Ícone do WhatsApp - Atendimento personalizado">
     </a>
 </div>
 
@@ -111,12 +111,12 @@ try {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-<script src="js/jqBootstrapValidation.js" defer></script>
-<script src="js/contact_me.js" defer></script>
-<script src="/js/freelancer.js" defer></script>
-<script src="js/galery.js" defer></script>
-<script src="js/lerMais.js" defer></script>
-<script src="js/lerMais2.js" defer></script>
+<script src="<?= h(asset_url('/js/jqBootstrapValidation.js')) ?>" defer></script>
+<script src="<?= h(asset_url('/js/contact_me.js')) ?>" defer></script>
+<script src="<?= h(asset_url('/js/freelancer.js')) ?>" defer></script>
+<script src="<?= h(asset_url('/js/galery.js')) ?>" defer></script>
+<script src="<?= h(asset_url('/js/lerMais.js')) ?>" defer></script>
+<script src="<?= h(asset_url('/js/lerMais2.js')) ?>" defer></script>
 <script>
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover();

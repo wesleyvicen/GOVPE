@@ -83,3 +83,11 @@ function image_url(mixed $value): string
     }
     return $url;
 }
+
+// Uma nova versão do arquivo recebe outra URL, sem reutilizar cache antigo.
+function asset_url(string $path): string
+{
+    $path = '/' . ltrim($path, '/');
+    $file = dirname(__DIR__) . $path;
+    return is_file($file) ? $path . '?v=' . substr(hash_file('sha256', $file), 0, 12) : $path;
+}

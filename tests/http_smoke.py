@@ -56,5 +56,6 @@ parser.feed(home + about)
 for path in parser.paths:
     url = urllib.parse.urlparse(path)
     if not url.scheme and not url.netloc:
-        request(urllib.parse.urlparse(urllib.parse.urljoin(base + '/', path)).path, 200)
+        asset = urllib.parse.urlparse(urllib.parse.urljoin(base + '/', path))
+        request(asset.path + ('?' + asset.query if asset.query else ''), 200)
 print('OK: home, sobre, assets locais, painel, formulários inválidos, 403 e 404.')

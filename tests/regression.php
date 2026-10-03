@@ -8,6 +8,8 @@ function check(bool $condition, string $message): void {
         throw new RuntimeException($message);
     }
 }
+check(asset_url('/css/style.css') === '/css/style.css?v=' . substr(hash_file('sha256', __DIR__ . '/../css/style.css'), 0, 12), 'Versão do CSS pelo conteúdo');
+check(asset_url('/arquivo-inexistente.css') === '/arquivo-inexistente.css', 'Asset inexistente mantém o caminho');
 check(h('<script>"&') === '&lt;script&gt;&quot;&amp;', 'Escape de HTML');
 check(h('Vicência') === 'Vicência', 'UTF-8 preservado');
 check(h(null) === '', 'Campos nulos');
