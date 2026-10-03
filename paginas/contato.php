@@ -24,14 +24,14 @@
                     </div>
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Phone Number</label>
+                            <label>Telefone</label>
                             <input class="form-control" id="phone" type="tel" placeholder="Contato" required="required" data-validation-required-message="Por favor, digite seu número de telefone.">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Message</label>
+                            <label>Mensagem</label>
                             <textarea class="form-control" id="message" rows="5" placeholder="Mensagem" required="required" data-validation-required-message="Por favor, digite uma mensagem."></textarea>
                             <p class="help-block text-danger"></p>
                         </div>

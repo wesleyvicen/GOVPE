@@ -38,7 +38,7 @@
 
   // Collapse Navbar
   var navbarCollapse = function() {
-    if ($("#mainNav").offset().top > 100) {
+    if ($("#mainNav").length && $(window).scrollTop() > 100) {
       $("#mainNav").addClass("navbar-shrink");
     } else {
       $("#mainNav").removeClass("navbar-shrink");
@@ -50,7 +50,7 @@
   $(window).scroll(navbarCollapse);
 
   // Modal popup$(function () {
-  $('.gov-item').magnificPopup({
+  if ($.fn.magnificPopup) $('.gov-item').magnificPopup({
     type: 'inline',
     preloader: false,
     focus: '#username',

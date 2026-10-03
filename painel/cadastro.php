@@ -1,12 +1,9 @@
 <?php
-if(!isset($_SESSION))
-{
-    session_start();
-}
+require_once __DIR__ . '/verifica_login.php';
 ?>
 <!DOCTYPE html>
 <html>
-    
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,7 +26,7 @@ if(!isset($_SESSION))
                     ?>
                     <div class="notification is-success">
                       <p>Cadastro efetuado!</p>
-                      <p>Faça login informando o seu usuário e senha <a href="login.php">aqui</a></p>
+                      <p>Faça login informando o seu usuário e senha <a href="index.php">aqui</a></p>
                     </div>
                     <?php
                     endif;
@@ -47,6 +44,7 @@ if(!isset($_SESSION))
                     ?>
                     <div class="box">
                         <form action="cadastrar.php" method="POST">
+            <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
                             <div class="field">
                                 <div class="control">
                                     <input name="nome" type="text" class="input is-large" placeholder="Nome" autofocus>

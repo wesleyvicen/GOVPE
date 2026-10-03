@@ -1,20 +1,14 @@
 <?php
-if (!isset($_SESSION)) {
-    session_start();
+require_once __DIR__ . '/verifica_login.php';
+require_post();
+$id = filter_var(post_text('id'), FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+if ($id === false) {
+    http_response_code(422);
+    exit('Informe um ID válido.');
 }
-include('conexao.php');
-
-$id = mysqli_real_escape_string($conexao, trim($_POST['id']));
-
-
-$sql = "DELETE FROM sonhos WHERE id='$id'";
-
-if($conexao->query($sql) === TRUE) {
-	$_SESSION['status_removido'] = true;
-}
-
-$conexao->close();
-
-header('Location: excluir.php');
-exit;
-?>
+require __DIR__ . '/conexao.php';
+$stmt = $conexao->prepare('DELETE FROM sonhos WHERE id = ?');
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$_SESSION['status_removido'] = $stmt->affected_rows > 0;
+redirect('/painel/excluir.php');

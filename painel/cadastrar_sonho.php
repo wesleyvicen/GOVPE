@@ -1,6 +1,5 @@
 <?php
-session_start();
-include('verifica_login.php');
+require_once __DIR__ . '/verifica_login.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -17,8 +16,8 @@ include('verifica_login.php');
     <title>Construtora GOV : GRUPO OLIVEIRA VASCONCELOS</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- Fontes personalizadas -->
 
@@ -29,7 +28,7 @@ include('verifica_login.php');
     <link href="css/stylePainel.css" rel="stylesheet">
 
     <!--Favicon Icon -->
-    <link rel="icon" href="./img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
 
 
 </head>
@@ -37,7 +36,7 @@ include('verifica_login.php');
 
 <ul class="nav nav-pills">
     <li class="nav-item">
-        <a class="nav-link active" href="./painel.php">Olá, <?php echo $_SESSION['usuario'];?></a>
+        <a class="nav-link active" href="./painel.php">Olá, <?= h($_SESSION['usuario']) ?></a>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sonhos</a>
@@ -63,6 +62,7 @@ include('verifica_login.php');
 <br>
 
 <form action="postagem.php" method="POST">
+            <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="inputTitulo">Titulo</label>
@@ -91,8 +91,8 @@ include('verifica_login.php');
 </form>
 <h2><a href="logout.php">Sair</a></h2>
 
-<script src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
-<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
 <script>
     $(function () {
         $('.dropdown-toggle').dropdown();

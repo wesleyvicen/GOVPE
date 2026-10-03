@@ -1,19 +1,37 @@
 <?php
-// Verificar campos vazios
-if(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['phone']) || empty($_POST['message']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-  http_response_code(500);
-  exit();
+require_once __DIR__ . '/../app/bootstrap.php';
+header('Content-Type: application/json; charset=UTF-8');
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    http_response_code(405);
+    header('Allow: POST');
+    exit(json_encode(['message' => 'Use o formulário de contato.']));
 }
-
-$name = strip_tags(htmlspecialchars($_POST['name']));
-$email = strip_tags(htmlspecialchars($_POST['email']));
-$phone = strip_tags(htmlspecialchars($_POST['phone']));
-$message = strip_tags(htmlspecialchars($_POST['message']));
+$rawName = post_text('name');
+$rawEmail = post_text('email');
+$rawPhone = post_text('phone');
+$rawMessage = post_text('message');
+if ($rawName === '' || $rawEmail === '' || $rawPhone === '' || $rawMessage === ''
+    || !filter_var($rawEmail, FILTER_VALIDATE_EMAIL)
+    || preg_match('/[\r\n]/', $rawName . $rawEmail)
+    || strlen($rawName) > 200 || strlen($rawEmail) > 254 || strlen($rawPhone) > 50 || strlen($rawMessage) > 10000) {
+    http_response_code(422);
+    exit(json_encode(['message' => 'Preencha todos os campos com dados válidos.']));
+}
+// PHP local não configura um serviço de e-mail automaticamente.
+$enabled = getenv('CONTACT_MAIL_ENABLED');
+if ($enabled === '0' || ($enabled !== '1' && PHP_SAPI === 'cli-server')) {
+    http_response_code(503);
+    exit(json_encode(['message' => 'O envio de e-mail está indisponível neste ambiente. Entre em contato por telefone ou WhatsApp.']));
+}
+$name = h($rawName);
+$email = h($rawEmail);
+$phone = h($rawPhone);
+$message = nl2br(h($rawMessage));
 $data_envio = date('d/m/Y');
 $hora_envio = date('H:i:s');
 
 // Create the email and send the message
-$to = "wesley1535@hotmail.com"; // Adicione seu endereço de e-mail entre os "" substituindo yourname@seudominio.com.br - Aqui é onde o formulário enviará uma mensagem.
+$to = getenv('CONTACT_TO') ?: "wesley1535@hotmail.com"; // Adicione seu endereço de e-mail entre os "" substituindo yourname@seudominio.com.br - Aqui é onde o formulário enviará uma mensagem.
 $subject = "Contato GOV:  $name";
 $body = "
 <html style='width:100%;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0;'>
@@ -52,11 +70,14 @@ $body = "
   </table>
 </html>
   ";
-$header = 'MIME-Version: 1.0' . "\r\n";
-$header .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-$header .= "From: noreply@govpe.com.br\n";
-$header .= "Reply-To: $email";	
-
-if(!mail($to, $subject, $body, $header))
-  http_response_code(500);
-?>
+$headers = [
+    'MIME-Version' => '1.0',
+    'Content-Type' => 'text/html; charset=UTF-8',
+    'From' => 'noreply@govpe.com.br',
+    'Reply-To' => $rawEmail,
+];
+if (!@mail($to, 'Contato GOV: ' . $rawName, $body, $headers)) {
+    http_response_code(503);
+    exit(json_encode(['message' => 'Não foi possível enviar o e-mail. Tente novamente mais tarde ou entre em contato por telefone.']));
+}
+echo json_encode(['message' => 'Mensagem enviada com sucesso.']);

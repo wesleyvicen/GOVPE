@@ -1,29 +1,25 @@
 <?php
-session_start();
-include("conexao.php");
-
-$nome = mysqli_real_escape_string($conexao, trim($_POST['nome']));
-$usuario = mysqli_real_escape_string($conexao, trim($_POST['usuario']));
-$senha = mysqli_real_escape_string($conexao, trim(md5($_POST['senha'])));
-
-$sql = "select count(*) as total from usuario where usuario = '$usuario'";
-$result = mysqli_query($conexao, $sql);
-$row = mysqli_fetch_assoc($result);
-
-if($row['total'] == 1) {
-	$_SESSION['usuario_existe'] = true;
-	header('Location: cadastro.php');
-	exit;
+require_once __DIR__ . '/verifica_login.php';
+require_post();
+$nome = post_text('nome');
+$usuario = post_text('usuario');
+$senha = post_text('senha');
+if ($nome === '' || $usuario === '' || $senha === '') {
+    http_response_code(422);
+    exit('Preencha nome, usuário e senha.');
 }
-
-$sql = "INSERT INTO usuario (nome, usuario, senha, data_cadastro) VALUES ('$nome', '$usuario', '$senha', NOW())";
-
-if($conexao->query($sql) === TRUE) {
-	$_SESSION['status_cadastro'] = true;
+require __DIR__ . '/conexao.php';
+$stmt = $conexao->prepare('SELECT COUNT(*) AS total FROM usuario WHERE usuario = ?');
+$stmt->bind_param('s', $usuario);
+$stmt->execute();
+if ($stmt->get_result()->fetch_assoc()['total'] > 0) {
+    $_SESSION['usuario_existe'] = true;
+    redirect('/painel/cadastro.php');
 }
-
-$conexao->close();
-
-header('Location: cadastro.php');
-exit;
-?>
+// Preserva o formato da coluna atual; migração de senhas exige alteração do banco.
+$hash = md5($senha);
+$stmt = $conexao->prepare('INSERT INTO usuario (nome, usuario, senha, data_cadastro) VALUES (?, ?, ?, NOW())');
+$stmt->bind_param('sss', $nome, $usuario, $hash);
+$stmt->execute();
+$_SESSION['status_cadastro'] = true;
+redirect('/painel/cadastro.php');

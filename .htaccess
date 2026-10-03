@@ -1,2 +1,12 @@
+DirectoryIndex index.php index.html
 ErrorDocument 404 /erro_personalizado.html
 ErrorDocument 403 /proibido_personalizado.html
+
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+<IfModule mod_authz_core.c>
+    <FilesMatch "(^\.|^(conexao|listar|verifica_login|bootstrap|router)\.php$|^(README\.md|start\.sh)$)">
+        Require all denied
+    </FilesMatch>
+</IfModule>

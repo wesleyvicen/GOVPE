@@ -1,11 +1,6 @@
 <?php
-if (!isset($_SESSION)) {
-    session_start();
-}
-include('verifica_login.php');
-require_once ('../painel/listar.php');
-$i = 0;
-$f = mysqli_fetch_array($res);
+require_once __DIR__ . '/verifica_login.php';
+require __DIR__ . '/listar.php';
 ?>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -19,8 +14,8 @@ $f = mysqli_fetch_array($res);
     <title>Construtora GOV : GRUPO OLIVEIRA VASCONCELOS</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- Fontes personalizadas -->
 
@@ -31,14 +26,14 @@ $f = mysqli_fetch_array($res);
     <link href="css/stylePainel.css" rel="stylesheet">
 
     <!--Favicon Icon -->
-    <link rel="icon" href="./img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
 
 
 </head>
 <body>
 <ul class="nav nav-pills">
     <li class="nav-item">
-        <a class="nav-link active" href="./painel.php">Olá, <?php echo $_SESSION['usuario'];?></a>
+        <a class="nav-link active" href="./painel.php">Olá, <?= h($_SESSION['usuario']) ?></a>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sonhos</a>
@@ -73,23 +68,22 @@ $f = mysqli_fetch_array($res);
     </tr>
     </thead>
     <tbody>
-    <?php
-do {
-    echo " <tr>
-                <th>".utf8_encode($f['id'])."</th>
-                <th>".utf8_encode($f['titulo'])."</th>
-                <th>".utf8_encode($f['fullsize'])."</th>
-                <th>".utf8_encode($f['thumbnails'])."</th>
-                <th>".utf8_encode($f['endereco'])."</th>";
-}while (($f = mysqli_fetch_array($res)));
-echo("</tr>")
-
-?>
+        <?php if (empty($sonhos)): ?>
+            <tr><td colspan="5">Nenhuma entrega cadastrada.</td></tr>
+        <?php else: foreach ($sonhos as $sonho): ?>
+            <tr>
+                <td class="red"><?= h($sonho['id']) ?></td>
+                <td><?= h($sonho['titulo']) ?></td>
+                <td><?= h($sonho['fullsize']) ?></td>
+                <td><?= h($sonho['thumbnails']) ?></td>
+                <td><?= h($sonho['endereco']) ?></td>
+            </tr>
+        <?php endforeach; endif; ?>
     </tbody>
 </table>
 </body>
-<script src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
-<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
 <script>
     $(function () {
         $('.dropdown-toggle').dropdown();

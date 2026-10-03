@@ -1,6 +1,15 @@
 <?php
-require_once('painel/listar.php');
-require_once('paginas/header.php');
+require_once __DIR__ . '/app/bootstrap.php';
+$sonhos = [];
+$erroSonhos = false;
+try {
+    require __DIR__ . '/painel/listar.php';
+} catch (mysqli_sql_exception $error) {
+    error_log('GOV: banco indisponível ao carregar entregas (código ' . $error->getCode() . ')');
+    $erroSonhos = true;
+    http_response_code(503);
+    header('Retry-After: 60');
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,22 +38,24 @@ require_once('paginas/header.php');
     <meta name="twitter:image" content="https://govpe.com.br/img/bg1.jpeg">
 
     <!-- CSS e outras dependências -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Lato:400,700,400italic,700italic" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://govpe.com.br/img/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png">
 </head>
 
 <body id="page-top">
 <header>
-    <?php require_once('paginas/menu.php'); ?>
+    <?php require __DIR__ . '/paginas/menu.php'; ?>
 </header>
 
 <main>
     <!-- Cabeçalho central com Parallax -->
-    <section class="call-to-action" style="background-image: url('https://govpe.com.br/img/bg1.jpeg');">
+    <section class="call-to-action" style="background-image: url('/img/bg1.jpeg');">
         <div class="container wow fadeIn">
             <div class="row">
                 <div class="col-md-10 mx-auto text-center">
@@ -66,16 +77,14 @@ require_once('paginas/header.php');
 
     <!-- Conteúdo dinâmico -->
     <?php 
-        require_once('paginas/sonhos.php');
-        require_once('paginas/tour360.php');
-        require_once('paginas/duvidas.php');
-        require_once('paginas/contato.php');
+        require __DIR__ . '/paginas/sonhos.php';
+        require __DIR__ . '/paginas/tour360.php';
+        require __DIR__ . '/paginas/duvidas.php';
+        require __DIR__ . '/paginas/contato.php';
     ?>
 </main>
 
-<footer>
-    <?php require_once('paginas/footer.php'); ?>
-</footer>
+<?php require __DIR__ . '/paginas/footer.php'; ?>
 
 <!-- Botão de voltar ao topo -->
 <div class="scroll-to-top d-lg-none position-fixed">
@@ -92,19 +101,19 @@ require_once('paginas/header.php');
        title="Entre em contato pelo WhatsApp" 
        href="https://api.whatsapp.com/send?phone=5581995431081&text=Eu%20preciso%20de%20ajuda" 
        target="_blank">
-        <img src="https://govpe.com.br/img/whatsapp.png" alt="Ícone do WhatsApp - Atendimento personalizado">
+        <img src="/img/whatsapp.png" alt="Ícone do WhatsApp - Atendimento personalizado">
     </a>
 </div>
 
 <!-- JavaScript e dependências -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 <script src="js/jqBootstrapValidation.js" defer></script>
 <script src="js/contact_me.js" defer></script>
-<script src="js/script.js" defer></script>
+<script src="/js/freelancer.js" defer></script>
 <script src="js/galery.js" defer></script>
 <script src="js/lerMais.js" defer></script>
 <script src="js/lerMais2.js" defer></script>

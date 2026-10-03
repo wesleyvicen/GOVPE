@@ -113,7 +113,7 @@
             </div>
         </div>
         <br>
-        <?php require_once ('paginas/sobre.php')?>
+        <?php require __DIR__ . '/sobre.php';?>
         <h3 class="text-center">Outras d&uacute;vidas? entre em contato logo abaixo</h3>
     </div>
 

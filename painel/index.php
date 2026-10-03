@@ -1,35 +1,39 @@
 <?php
-if(!isset($_SESSION))
-{
-    session_start();
-}
+require_once __DIR__ . '/../app/bootstrap.php';
 ?>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Entrar no painel GOV</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link href="css/style.css" rel="stylesheet">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
+</head><body>
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
 
         <!-- Icon -->
         <div class="fadeIn first">
-            <img src="https://govpe.com.br/img/favicon.png" id="icon" alt="User Icon" />
+            <img src="/img/favicon.png" id="icon" alt="User Icon" />
         </div>
 
         <!-- Login Form -->
+        <?php if (!empty($_SESSION['nao_autenticado'])): ?>
+            <p role="alert">Usuário ou senha inválidos.</p>
+        <?php unset($_SESSION['nao_autenticado']); endif; ?>
         <form action="login.php" method="POST">
-            <input type="text" id="login" class="fadeIn second" name="usuario" placeholder="Usuário">
-            <input type="password" id="password" class="input is-large" name="senha" placeholder="Senha">
+            <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
+            <input type="text" id="login" class="fadeIn second" name="usuario" placeholder="Usuário" required autocomplete="username">
+            <input type="password" id="password" class="input is-large" name="senha" placeholder="Senha" required autocomplete="current-password">
             <input type="submit" class="fadeIn fourth" value="Entrar">
         </form>
 
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            <a class="underlineHover" href="https://govpe.com.br">Voltar ao site</a>
+            <a class="underlineHover" href="/">Voltar ao site</a>
         </div>
 
     </div>
 </div>
+</body></html>

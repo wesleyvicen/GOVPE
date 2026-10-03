@@ -1,22 +1,17 @@
 <?php
-session_start();
-include('conexao.php');
-
-if(empty($_POST['inputTitulo']) || empty($_POST['inputEndereco'])|| empty($_POST['inputfullthumbnails'])|| empty($_POST['inputfullSize'])|| empty($_POST['inputTitulo'])|| empty($_POST['inputTitulo'])) {
-    header('Location: index.php');
-    exit();
+require_once __DIR__ . '/verifica_login.php';
+require_post();
+$titulo = post_text('inputTitulo');
+$endereco = post_text('inputEndereco');
+$thumbnails = post_text('inputfullthumbnails');
+$fullsize = post_text('inputfullSize');
+if ($titulo === '' || $endereco === '' || $thumbnails === '' || $fullsize === ''
+    || image_url($thumbnails) === '' || image_url($fullsize) === '') {
+    http_response_code(422);
+    exit('Preencha título, endereço e os endereços válidos das duas imagens.');
 }
-$usuario = mysqli_real_escape_string($conexao, $_POST['inputTitulo']);
-$usuario = mysqli_real_escape_string($conexao, $_POST['inputEndereco']);
-$usuario = mysqli_real_escape_string($conexao, $_POST['inputfullthumbnails']);
-$usuario = mysqli_real_escape_string($conexao, $_POST['inputfullSize']);
-$titulo         = (isset($_POST['inputTitulo'])             ?       $_POST['inputTitulo']:'');
-$endereco       = (isset($_POST['inputEndereco'])           ?       $_POST['inputEndereco']:'');
-$thumbnails     = (isset($_POST['inputfullthumbnails'])     ?       $_POST['inputfullthumbnails']:'');
-$fullsize       = (isset($_POST['inputfullSize'])           ?       $_POST['inputfullSize']:'');
-
-        $sql_insert = "INSERT INTO sonhos (titulo, endereco	, thumbnails, fullsize) values ('$titulo', '$endereco', '$thumbnails', '$fullsize');";
-        $res = mysqli_query($conexao, $sql_insert);
-
-        $row = mysqli_num_rows($res);
-        header('Location: painel.php');
+require __DIR__ . '/conexao.php';
+$stmt = $conexao->prepare('INSERT INTO sonhos (titulo, endereco, thumbnails, fullsize) VALUES (?, ?, ?, ?)');
+$stmt->bind_param('ssss', $titulo, $endereco, $thumbnails, $fullsize);
+$stmt->execute();
+redirect('/painel/painel.php');

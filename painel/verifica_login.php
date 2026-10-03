@@ -1,9 +1,5 @@
 <?php
-if(!isset($_SESSION))
-{
-    session_start();
-}
-if(!$_SESSION['usuario']) {
-    header('Location: index.php');
-    exit();
+require_once __DIR__ . '/../app/bootstrap.php';
+if (empty($_SESSION['usuario'])) {
+    redirect('/painel/index.php');
 }

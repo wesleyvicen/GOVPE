@@ -1,17 +1,12 @@
-$(document).ready(function() {
-    $('.tgl').before('<span style="cursor: pointer; color: white;">Veja Mais »</span>');
-
-    $('.tgl').css('display', 'none');
-
-    // Use $(document) para garantir que o evento funcione mesmo em elementos dinâmicos
-    $(document).on('click', 'span', function() {
-        var parent = $(this).parent('#box-toggle'); // Garante que está no contêiner correto
-
-        if (parent.length > 0) {
-            $(this).next('.tgl').slideToggle('slow')
-                .siblings('.tgl:visible').slideToggle('fast');
-
-            $(this).toggleText('Veja Mais »', 'Veja Menos «');
-        }
+$(function () {
+    $('.tgl').each(function () {
+        var $panel = $(this).hide();
+        var $button = $('<button type="button" class="btn btn-primary" aria-expanded="false">Veja Mais »</button>');
+        $panel.before($button);
+        $button.on('click', function () {
+            var expanded = $button.attr('aria-expanded') === 'true';
+            $button.attr('aria-expanded', String(!expanded)).text(expanded ? 'Veja Mais »' : 'Veja Menos «');
+            $panel.stop(true, true).slideToggle('slow');
+        });
     });
 });
